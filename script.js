@@ -7,6 +7,7 @@ function calculateTDEE() {
   const goal = document.getElementById("goal").value;
   const proteinRatio = parseFloat(document.getElementById("proteinRatio").value);
   const fatRatio = parseFloat(document.getElementById("fatRatio").value);
+  const goalCalories = parseInt(document.getElementById("goalCalories").value) || 0;
 
   let bmr;
   if (gender === "male") {
@@ -16,8 +17,10 @@ function calculateTDEE() {
   }
 
   let tdee = bmr * activity;
-  if (goal === "cut") tdee -= 500;
-  else if (goal === "bulk") tdee += 500;
+
+  // استخدم القيمة المدخلة بدلاً من 500
+  if (goal === "cut") tdee -= goalCalories;
+  else if (goal === "bulk") tdee += goalCalories;
 
   const proteinGrams = weight * proteinRatio;
   const proteinCals = proteinGrams * 4;
@@ -34,4 +37,19 @@ function calculateTDEE() {
     `البروتين: ${proteinGrams.toFixed(1)} جم<br>` +
     `الدهون: ${fatGrams.toFixed(1)} جم (${(fatRatio * 100).toFixed(0)}%)<br>` +
     `الكارب: ${carbsGrams.toFixed(1)} جم`;
+}
+
+// دالة لتحديث الرسالة حسب الهدف والسعرات
+function updateAdjustmentMessage() {
+  const goal = document.getElementById("goal").value;
+  const calories = document.getElementById("goalCalories").value;
+  const message = document.getElementById("adjustmentMessage");
+
+  if (goal === "cut") {
+    message.textContent = `سيتم خصم ${calories || 0} سعرة من TDEE لتحقيق خسارة وزن.`;
+  } else if (goal === "bulk") {
+    message.textContent = `سيتم إضافة ${calories || 0} سعرة إلى TDEE لتحقيق زيادة وزن.`;
+  } else {
+    message.textContent = "لن يتم تعديل السعرات، الهدف هو المحافظة.";
+  }
 }
