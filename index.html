@@ -2,29 +2,17 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  
   <meta name="description" content="Zeyad_fit0 | موقع لحساب السعرات الحرارية TDEE بطريقة ذكية وسهلة.">
   <meta name="keywords" content="Zeyad_fit0, TDEE, سعرات حرارية, حساب السعرات, دايت, تغذية, رياضة">
   <meta name="author" content="Zeyad_fit0">
-
   <meta property="og:title" content="Zeyad_fit0">
   <meta property="og:description" content="احسب احتياجاتك من السعرات والبروتين والكارب بسهولة مع Zeyad_fit0.">
   <meta property="og:type" content="website">
   <meta name="robots" content="index, follow">
-
   <title>Zeyad_fit0 (TDEE)</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="logo.png.png">
-  <meta name = "viewport" content = "width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0"/>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N4YYDYPWNF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-N4YYDYPWNF');
-</script>
+  <meta name="viewport" content="width=device-width initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 </head>
 <body>
   <div class="container">
@@ -47,31 +35,41 @@
 
     <label>معدل النشاط:</label>
     <select id="activity">
+      <option value="" selected disabled>اختر معدل النشاط</option>
       <option value="1.3">1.3 - قليل النشاط (تمرين 1-2 مرات/أسبوع)</option>
       <option value="1.5">1.5 - متوسط النشاط (تمرين 3-4 مرات/أسبوع)</option>
       <option value="1.7">1.7 - نشيط (تمرين 5-6 مرات/أسبوع)</option>
       <option value="1.9">1.9 - نشيط جداً (تمرين يومي أو مرتين باليوم)</option>
-    </select>
+    </select>    
 
+    <!-- ▼▼ تم تعديل هذا الجزء ▼▼ -->
     <label>الهدف:</label>
-    <select id="goal">
+    <select id="goal" onchange="updateAdjustmentMessage()">
       <option value="maintain">المحافظة</option>
       <option value="cut">خسارة وزن</option>
       <option value="bulk">زيادة وزن</option>
     </select>
 
+    <label>عدد السعرات المُراد زيادتها أو إنقاصها:</label>
+    <input type="number" id="goalCalories" oninput="updateAdjustmentMessage()" />
+
+    <p id="adjustmentMessage" style="color:#666; font-size:14px;"></p>
+    <!-- ▲▲ نهاية التعديل ▲▲ -->
+
     <label>نسبة البروتين (جم/كجم):</label>
     <select id="proteinRatio">
+      <option value="" selected disabled>اختر النسبة</option>
       <option value="1.2">1.2</option>
       <option value="1.4">1.4</option>
       <option value="1.6">1.6</option>
       <option value="1.7">1.7</option>
       <option value="1.8">1.8</option>
-      <option value="2.2" selected>2.2</option>
-    </select>
+      <option value="2.2">2.2</option>
+    </select>    
 
     <label>نسبة الدهون (% من السعرات):</label>
     <select id="fatRatio">
+      <option value="" selected disabled>اختر النسبة</option>
       <option value="0.05">5%</option>
       <option value="0.10">10%</option>
       <option value="0.15">15%</option>
@@ -82,6 +80,7 @@
       <option value="0.29">29%</option>
       <option value="0.30">30%</option>
     </select>
+    
 
     <button onclick="calculateTDEE()">احسب السعرات</button>
 
